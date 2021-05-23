@@ -6,6 +6,20 @@
 parameters:
 
 services:
+    # Repositories
+    app.user.repository:
+        class: App\Repository\UserRepository
+        arguments:
+            - Symfony\Bridge\Doctrine\RegistryInterface
+            - Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
+
+    # Controllers
+    app.auth.controller:
+        class: App\Controller\AuthController
+        arguments:
+            - '@app.user.repository'
+
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
