@@ -7,10 +7,16 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=ClientRepository::class)
+ * @UniqueEntity(
+ *     fields={"name"},
+ *     message="Name already used"
+ * )
  */
 class Client
 {
@@ -23,6 +29,8 @@ class Client
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=3, minMessage="The name must be at least 3 characters long")
+     * @Assert\Length(max=255, maxMessage="The name must not do more 255 characters long")
      */
     private $name;
 

@@ -5,10 +5,16 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @UniqueEntity(
+ *     fields={"name"},
+ *     message="Name already used"
+ * )
  */
 class Product
 {
@@ -21,11 +27,15 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=3, minMessage="The name must be at least 3 characters long")
+     * @Assert\Length(max=255, maxMessage="The name must not do more 255 characters long")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=3, minMessage="The brand must be at least 3 characters long")
+     * @Assert\Length(max=255, maxMessage="The brand must not do more 255 characters long")
      */
     private $brand;
 
@@ -35,7 +45,9 @@ class Product
     private $price;
 
     /**
-     * @ORM\Column(type="text", length=255)
+     * @ORM\Column(type="text", length=65535)
+     * @Assert\Length(min=3, minMessage="The description must be at least 3 characters long")
+     * @Assert\Length(max=255, maxMessage="The description must not do more 65535 characters long")
      */
     private $description;
 
