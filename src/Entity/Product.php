@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(collectionOperations={"get"}, itemOperations={"get"})
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @UniqueEntity(
  *     fields={"name"},
