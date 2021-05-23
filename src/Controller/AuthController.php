@@ -6,7 +6,6 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class AuthController extends AbstractController
 {
@@ -23,29 +22,19 @@ class AuthController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
-# Then add this to the class
     /**
      * Register new user
      * @param Request $request
      *
      * @return Response
      */
-    public function register(Request $request)
+    public function register(Request $request): Response
     {
-        $newUserData['email']    = $request->get('email');
+        $newUserData['email'] = $request->get('email');
         $newUserData['password'] = $request->get('password');
 
         $user = $this->userRepository->createNewUser($newUserData);
 
         return new Response(sprintf('User %s successfully created', $user->getUsername()));
-    }
-
-    /**
-     * api route redirects
-     * @return Response
-     */
-    public function api()
-    {
-        return new Response(sprintf("Logged in as %s", $this->getUser()->getUsername()));
     }
 }
