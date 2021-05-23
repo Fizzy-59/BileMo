@@ -7,11 +7,20 @@ use App\Entity\Client;
 use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
+
         // === Products ===
         $product = new Product();
         $product->setName('Galaxy Note 20')
@@ -61,6 +70,7 @@ class AppFixtures extends Fixture
             $client = $this->getReference('Orange');
             $user->setUsername('user' . $i . $client->getName())
                 ->setEmail('user' . $i . $client->getName() . '@test.com')
+                ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
                 ->setClient($client);
             $manager->persist($user);
         }
@@ -71,6 +81,7 @@ class AppFixtures extends Fixture
             $client = $this->getReference('SFR');
             $user->setUsername('user' . $i . $client->getName())
                 ->setEmail('user' . $i . $client->getName() . '@test.com')
+                ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
                 ->setClient($client);
             $manager->persist($user);
         }
@@ -80,6 +91,7 @@ class AppFixtures extends Fixture
         $client = $this->getReference('Orange');
         $user->setUsername('admin' . $client->getName())
             ->setEmail('admin' . $client->getName() . '@test.com')
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
             ->setClient($client);
         $manager->persist($user);
 
@@ -87,6 +99,7 @@ class AppFixtures extends Fixture
         $client = $this->getReference('SFR');
         $user->setUsername('admin' . $client->getName())
             ->setEmail('admin' . $client->getName() . '@test.com')
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
             ->setClient($client);
         $manager->persist($user);
 
