@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ClientRepository;
+use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,13 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass=ClientRepository::class)
+ * @ORM\Entity(repositoryClass=CustomerRepository::class)
  * @UniqueEntity(
  *     fields={"name"},
  *     message="Name already used"
  * )
  */
-class Client
+class Customer
 {
     /**
      * @ORM\Id
@@ -35,7 +35,7 @@ class Client
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="client")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="customer")
      */
     private $users;
 
@@ -73,7 +73,7 @@ class Client
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setClient($this);
+            $user->setCustomer($this);
         }
 
         return $this;
@@ -83,8 +83,8 @@ class Client
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getClient() === $this) {
-                $user->setClient(null);
+            if ($user->getCustomer() === $this) {
+                $user->setCustomer(null);
             }
         }
 

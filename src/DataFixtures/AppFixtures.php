@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Client;
+use App\Entity\Customer;
 use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -53,12 +53,12 @@ class AppFixtures extends Fixture
         $manager->persist($product);
 
         // === Clients ===
-        $client = new Client();
+        $client = new Customer();
         $client->setName('Orange');
         $this->addReference('Orange', $client);
         $manager->persist($client);
 
-        $client = new Client();
+        $client = new Customer();
         $client->setName('SFR');
         $this->addReference('SFR', $client);
         $manager->persist($client);
@@ -71,7 +71,7 @@ class AppFixtures extends Fixture
             $user->setUsername('user' . $i . $client->getName())
                 ->setEmail('user' . $i . $client->getName() . '@test.com')
                 ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
-                ->setClient($client);
+                ->setCustomer($client);
             $manager->persist($user);
         }
 
@@ -82,7 +82,7 @@ class AppFixtures extends Fixture
             $user->setUsername('user' . $i . $client->getName())
                 ->setEmail('user' . $i . $client->getName() . '@test.com')
                 ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
-                ->setClient($client);
+                ->setCustomer($client);
             $manager->persist($user);
         }
 
@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
         $user->setUsername('admin' . $client->getName())
             ->setEmail('admin' . $client->getName() . '@test.com')
             ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
-            ->setClient($client);
+            ->setCustomer($client);
         $manager->persist($user);
 
         $user = new User();
@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
         $user->setUsername('admin' . $client->getName())
             ->setEmail('admin' . $client->getName() . '@test.com')
             ->setPassword($this->passwordEncoder->encodePassword($user, 'test'))
-            ->setClient($client);
+            ->setCustomer($client);
         $manager->persist($user);
 
         $manager->flush();

@@ -61,25 +61,25 @@ class User implements UserInterface
 
     private $password;
     /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="users")
      */
-    private $client;
+    private $customer;
 
     /**
      * @return mixed
      */
-    public function getClient()
+    public function getCustomer()
     {
-        return $this->client;
+        return $this->customer;
     }
 
     /**
-     * @param mixed $client
+     * @param mixed $customer
      * @return User
      */
-    public function setClient($client)
+    public function setCustomer(?Customer $customer): self
     {
-        $this->client = $client;
+        $this->customer = $customer;
         return $this;
     }
 
