@@ -3,14 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * User = Client
+ *
+ * @ApiResource(attributes={"normalization_context"={"groups"={"user_get"}}})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(
  *     fields={"email"},
@@ -33,17 +37,10 @@ class User implements UserInterface
      */
     private $username;
 
-    /**
-     * @param mixed $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-        return $this;
-    }
 
     /**
+     * @Groups({"user_get"})
+     *
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
@@ -56,10 +53,10 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-
     private $password;
+
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="users")
      */
@@ -126,6 +123,16 @@ class User implements UserInterface
     {
         $this->roles = $roles;
 
+        return $this;
+    }
+
+    /**
+     * @param mixed $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
         return $this;
     }
 
