@@ -33,7 +33,7 @@ class UserDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        if ($data->getPassword()) {
+        if (!empty($data->getPassword())) {
             $data->setPassword(
                 $this->userPasswordEncoderInterface->encodePassword($data, $data->getPassword())
             );
