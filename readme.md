@@ -1,4 +1,4 @@
-# SnowTricks
+# BileMo
 
 Creating an API using the Symfony framework and the API Platform bundle.
 
