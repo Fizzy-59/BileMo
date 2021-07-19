@@ -2,7 +2,6 @@ api_platform:
     http_cache:
         invalidation:
             enabled: true
-            varnish_urls: [ '%env(VARNISH_URL)%' ]
         public: true
     defaults:
         # Number of items per page (5 for easy example)
